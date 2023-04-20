@@ -10,15 +10,10 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
-      <head>
-        <title>Little Lemon</title>
-      </head>
-      <body>
-        <Header />
-        <Nav />
-        <Main />
-        <Footer />
-      </body>
+      <Header />
+      <Nav />
+      <Main />
+      <Footer />
     </>
   );
 }
