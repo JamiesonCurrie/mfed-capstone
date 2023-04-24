@@ -1,43 +1,54 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
-  faGithub
-, faLinkedin
-, faMedium
-, faStackOverflow
+  faFacebook
+, faInstagram
+, faTiktok
+, faYelp
 } from "@fortawesome/free-brands-svg-icons";
 
 const socials = [
-    {
-        icon: faGithub,
-        url: "https://github.com",
-    }
-,   {
-        icon: faLinkedin,
-        url: "https://www.linkedin.com",
-    }
-,   {
-        icon: faMedium,
-        url: "https://medium.com",
-    }
-,   {
-        icon: faStackOverflow,
-        url: "https://stackoverflow.com",
-    }
+  {
+    id:   'facebook'
+  , icon: faFacebook
+  , url: "https://facebook.com"
+  }
+, {
+    id:   'instagram'
+  , icon: faInstagram
+  , url: "https://instagram.com"
+  }
+, {
+    id:   'tiktok'
+  , icon: faTiktok
+  , url: "https://tiktok.com"
+  }
+, {
+    id:   'yelp'
+  , icon: faYelp
+  , url: "https://yelp.com"
+  }
 ];
 
 const Socials = () => {
-    return (
-        <nav>
-            {socials.map((social) => {
-                return (
-                    <li>
-                        <a key={social.url} href={social.url}>
-                            <FontAwesomeIcon icon={social.icon} size='2x' />
-                        </a>
-                    </li>
-                );
-            })}
-        </nav>
-    );
+  return (
+    <section id='socials'>
+      <h5>Social Media</h5>
+      <nav>
+        <ul>
+          {socials.map((social) => {
+            return (
+              <li key={social.id}>
+                <a href={social.url} target='_blank' rel="noreferrer noopener">
+                  <FontAwesomeIcon icon={social.icon} size='2xl' />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </section>
+  );
 };
 
 export default Socials;
