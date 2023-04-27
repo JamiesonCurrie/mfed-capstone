@@ -5,10 +5,10 @@ import Contact from "./Contact";
 const Footer = () => {
   return (
     <footer>
-      <img src="../images/Mario and Adrian b.jpg" alt="Mario and Adrian" />
-      <section id='sitenav'>
+      <img src="../../public/images/Mario and Adrian b.jpg" alt="Mario and Adrian" />
+      <section id='sitenav-section'>
         <h5>Site Navigation</h5>
-        <Nav />
+        <Nav id='sitenav'/>
       </section>
       <Contact />
       <Socials />
