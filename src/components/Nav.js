@@ -14,10 +14,9 @@ const navItems = [
 ];
 
 const Nav = (props) => {
-  const [menuClass, setMenuClass]             = useState(null);
+  const [menuClass, setMenuClass] = useState(null);
 
   const handleLinkClick = (anchor) => () => {
-    console.log(anchor);
     (menuClass) ? setMenuClass(null) : setMenuClass('open');
 
     const id = `${anchor}-section`;
@@ -37,7 +36,7 @@ const Nav = (props) => {
   return (
     <nav {... props}>
       <FontAwesomeIcon id={props.id + '-burgernav'} icon={faBars} size='2xl' onClick={handleBurgerClick} />
-      <ul id={props.id + '-list'}>
+      <ul className={menuClass}>
         {navItems.map((navItem) => {
           const itemKey = navItem.key;
           return (
