@@ -4,22 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const navItems = [
-  { key: 'navbar',   text: 'Home'}
-, { key: 'reserve',  text: 'Reservations'}
+  { key: 'home',     text: 'Home'}
 , { key: 'specials', text: 'Menu'}
 , { key: 'reviews',  text: 'Reviews'}
 , { key: 'about',    text: 'About'}
+, { key: 'reserve',  text: 'Reservations'}
 , { key: 'order',    text: 'Order Online'}
 , { key: 'login',    text: 'Login'}
 ];
 
 const Nav = (props) => {
-  const [currentSelected, setCurrentSelected] = useState('');
   const [menuClass, setMenuClass]             = useState(null);
 
   const handleLinkClick = (anchor) => () => {
     console.log(anchor);
-    setCurrentSelected(anchor);
     (menuClass) ? setMenuClass(null) : setMenuClass('open');
 
     const id = `${anchor}-section`;
@@ -39,14 +37,11 @@ const Nav = (props) => {
   return (
     <nav {... props}>
       <FontAwesomeIcon id={props.id + '-burgernav'} icon={faBars} size='2xl' onClick={handleBurgerClick} />
-      <ul id={props.id + '-list'} className={menuClass}>
+      <ul id={props.id + '-list'}>
         {navItems.map((navItem) => {
           const itemKey = navItem.key;
           return (
-            <li
-              className={(itemKey === currentSelected) ? 'selected' : null}
-              key={itemKey}
-            >
+            <li key={itemKey}>
               <a href={'#' + itemKey} onClick={handleLinkClick(itemKey)}>
                 {navItem.text}
               </a>
