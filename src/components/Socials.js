@@ -32,22 +32,20 @@ const socials = [
 
 const Socials = () => {
   return (
-    <section id='socials'>
-      <h5>Social Media</h5>
-      <nav>
-        <ul>
-          {socials.map((social) => {
-            return (
-              <li key={social.id}>
-                <a href={social.url} target='_blank' rel="noreferrer noopener">
-                  <FontAwesomeIcon icon={social.icon} size='2xl' />
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-    </section>
+    <nav id='socials'>
+      <h3>Social Media</h3>
+      <ul>
+        {socials.map((social) => {
+          return (
+            <li key={social.id}>
+              <a href={social.url} target='_blank' rel="noreferrer noopener">
+                <FontAwesomeIcon icon={social.icon} size='2xl' />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };
 

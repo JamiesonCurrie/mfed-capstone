@@ -5,9 +5,9 @@ import Contact from "./Contact";
 const Footer = () => {
   return (
     <footer>
-      <img src="../../public/images/Mario and Adrian b.jpg" alt="Mario and Adrian" />
+      <img src="/images/restauranfood.jpg" alt="Little Lemon Food" />
       <section id='sitenav-section'>
-        <h5>Site Navigation</h5>
+        <h3>Site Navigation</h3>
         <Nav id='sitenav'/>
       </section>
       <Contact />
