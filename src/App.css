@@ -475,6 +475,7 @@ footer > img {
 #sitenav > ul {
   flex-flow: column;
   column-gap: 1em;
+  row-gap: 1em;
   padding-left: 1em;
 }
 
@@ -493,89 +494,309 @@ footer > img {
 
 /*****************************************************************************/
 /*****************************************************************************/
+/* MOBILE                                                                    */
+/*****************************************************************************/
+/*****************************************************************************/
+
 @media only screen and (max-width: 768px) {
   #root {
     display: grid;
     margin: 0 1vw 0 1vw;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 1vw;
-    grid-template-rows: auto repeat(4, 1fr) 1fr;
-  
-    font-family: 'Markazi Text', Karla;
+    grid-template-rows: repeat(6, auto);
   }
-  
+
   header {
-    grid-column: 3/ span 2;
+    grid-column: 1/ span 3;
     grid-row: 1;
-    justify-content:right;
   }
 
   #navbar {
-    background-color: #495E57;
-    grid-column: 1;
+    grid-column: 1/ span 4;
     grid-row: 1;
-    display: inline-flex;
-    flex-flow: row;
-    justify-content: left;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-self: baseline;
+
+    background-color: rgb(0,0,0,0);
   }
 
   #navbar-burgernav {
-    display: block;
-    color: #f4ce14;
+    grid-column: 2/ span 1;
+
+    display:block;
+    color: #495E57;
+
+    height: 100%;
+    width: 40%;
+
+    justify-self: end;
   }
 
-  #navbar ul {
+  #navbar > ul {
     display: none;
-  }
-  #navbar ul.open {
-    display: flex;
-    flex-flow: column;
-    float: right;
-    margin: 0;
-    padding-left: 2vw;
+    background-color: #495E57;
   }
 
-  #navbar li:hover {
-    background-color: #EE9972;
+  #navbar > ul.open {
+    grid-column: 1/ span 2;
+    grid-row: 2;
+
+    display: flex;
+    flex-flow: row wrap;
+    align-self: baseline;
+
+    margin: 0;
+    padding-left: 1vw;
   }
-  #navbar li:hover a {
-    color: #333333;
-    text-decoration: underline;
-  }
+
+/*****************************************************************************/
+/*****************************************************************************/
 
   main {
-    display: subgrid;
-    background-color: chartreuse;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
     grid-column: 1/ span 4;
     grid-row: 2/ span 4;
+    row-gap: inherit;
   }
+
+/*****************************************************************************/
+
+  #home-section {
+    grid-column: 1/ span 4;
+    grid-row: 1;
+
+    display: flex;
+    flex-flow: column;
+  }
+
+  #home-section > img {
+    order: 1;
+    margin: 0;
+  }
+
+  #home-section > h1 {
+    order: 2;
+
+    /*margin-top: 5vh;
+    margin-bottom: 0;*/
+
+    font-size: 50pt;
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #home-section > h2 {
+    order: 3;
+    margin-top: 0;
+
+    font-weight: 500;
+    color: #EE9972;
+  }
+
+  #home-section > p {
+    order: 4;
+
+    font-size: 20pt;
+    width: 95%;
+  }
+
+  #home-section > button {
+    order: 5;
+    justify-self: stretch;
+    align-self: flex-start;
+
+    padding: 15px;
+
+    font-weight: 500;
+    font-size: 18pt;
+  }
+
+/*****************************************************************************/
+
+  #specials-section {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: auto 1fr;
+    row-gap: 4vh;
+    column-gap: 10vw;
+
+    max-width: 100%;
+  }
+
+  #specials-section > h1 {
+    grid-row: 1;
+    grid-column: 1/ span 2;
+
+    margin: 0;
+
+    font-family: 'Markazi Text';
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #specials-section > button {
+    grid-row: 1;
+    grid-column: 3/ span 2;
+    align-self: baseline;
+    justify-self: stretch;
+
+    padding: 15px;
+
+    font-family: 'Markazi Text';
+    font-weight: 500;
+    font-size: 18pt;
+  }
+
+  #specials-list {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2vw;
+
+    margin: 0 2vw 0 2vw;
+  }
+
+  #specials-list .card {
+    height: 50vh;
+  }
+
+/*****************************************************************************/
+
+  #reviews-section {
+    grid-column: 1/ span 4;
+    grid-row: 3;
+  }
+
+  #reviews-section > h2 {
+    grid-row: 1;
+    grid-column: 1/ span 4;
+    justify-self: center;
+  }
+
+  #reviews-section > ul {
+    grid-row: 2;
+    grid-column: 1/ span 4;
+
+    flex-flow: row wrap;
+  }
+
+  #reviews-section > ul > li {
+    min-width: 30%;
+    flex: 1 1 45%;
+  }
+
+  #reviews-section .card {
+    grid-template-rows: auto 1fr 2fr;
+  }
+
+/*****************************************************************************/
+
+  #about-section {
+    grid-column: 1/ span 4;
+    grid-row: 4;
+
+    display: flex;
+    flex-flow: column;
+  }
+
+  #about-section > h1 {
+    order: 2;
+
+    margin-top: 5vh;
+    margin-bottom: 0;
+
+    font-size: 40pt;
+    font-weight: 500;
+    color: #495E57;
+  }
+
+  #about-section > h2 {
+    order: 3;
+    margin-top: 0;
+
+    font-weight: 500;
+    color: #EE9972;
+  }
+
+  #about-section > p {
+    order: 4;
+
+    font-size: 20pt;
+    width: 95%;
+  }
+
+  #about-section > img {
+    order: 1;
+    object-fit: cover;
+    width: 85%;
+    height: auto;
+  }
+
+  #about-section > img.bottom {
+    align-self: end;
+  }
+
+  #about-section > img.top {
+    align-self: flex-start;
+    margin-top: 2vh;
+  }
+
+/*****************************************************************************/
+/*****************************************************************************/
 
   footer {
     grid-column: 1/ span 4;
     display: flex;
     flex-flow: column;
     grid-row: 6;
+    padding: 2vw 2vh 2vw 2vh;
     background-color: #495E57;
+    color: #EDEFEE;
   }
-  
+
+  footer h3 {
+    color: #F4CE14;
+  }
+
   footer img {
     order: 4;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-  
+
+/*****************************************************************************/
+
   #sitenav-section {
     order: 1;
   }
 
   #contact {
-    background-color: red;
     order: 3
   }
-  
+
   #socials {
-    color: #EE9972;
     order: 2;
+  }
+
+  #socials > ul {
+    flex-flow: row wrap;
+    margin-left: 5vw;
+    justify-self: center;
+    column-gap: 10vw;
   }
 }
 
-
-
+/*****************************************************************************/
+/*****************************************************************************/
