@@ -26,10 +26,16 @@ const specials = [
 ];
 
 const Specials = () => {
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    alert('Coming Soon!');
+  };
+
   return (
     <section id='specials-section'>
       <h1>Specials</h1>
-      <button>Order Online</button>
+      <button onClick={handleClick}>Order Online</button>
       <ul id='specials-list'>
         {specials.map((special) => {
           return (
