@@ -32,6 +32,28 @@ ul {
   margin: 0;
 }
 
+input[type=button], input[type=submit], button {
+  background-color: #FDBABB;
+  color: #333333;
+
+  padding: 16px 32px;
+  margin: 4px 2px;
+  border-radius: 16pt;
+
+  width: fit-content;
+
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+input[type=button]:hover, input[type=submit]:hover, button:hover {
+  background-color: #EE9972;
+}
+
 /*****************************************************************************/
 
 header {
@@ -51,7 +73,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #F4CE14;
+  color: #EE9972;
   text-decoration: underline;
 }
 
@@ -119,9 +141,80 @@ main {
   box-shadow: 0 8px 16px 0 rgb(51,51,51,0.8);
 }
 
+form {
+  grid-column: 4/ span 6;
+  grid-row: 1/ span 3;
+
+  color: #333333;
+}
+
+form fieldset {
+  border-color: #495E57;
+  border-radius: 16pt;
+  border-width: 4px;
+}
+
+form legend {
+  font-weight: 500;
+  background-color: #495E57;
+  color: #F4CE14;
+
+  padding: 1vw 1vh;
+  border-radius: 16pt;
+}
+
+form h3 {
+  font-weight: 600;
+  color: #495E57;
+}
+
+form h3 > nobr {
+  font-weight: 600;
+  color: #EE9972;
+}
+
+form label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+
+  width: 25%;
+  font-weight: 500;
+  font-size: 18pt;
+}
+
+form select {
+  width: fit-content;
+  margin-right: 20vw;
+}
+
+form input {
+  width: 70%;
+}
+
+form input[type=date] {
+  width: 25%;
+  margin-right: 15vw;
+}
+
+form input[type=range] {
+  accent-color: #EE9972;
+  margin-left: 12px;
+}
+
+form input[type=text] {
+  height: 1.5rem;
+  text-align: left;
+}
+
+form input[type=submit] {
+  margin-top: 5vh;
+}
+
+
+
 /*****************************************************************************/
 
-#home-section {
+#landing-section {
   grid-column: 3/ span 8;
   grid-row: 1;
 
@@ -134,7 +227,7 @@ main {
   font-weight: 400;
 }
 
-#home-section > h1 {
+#landing-section > h1 {
   grid-column: 1/ span 4;
 
   margin-top: 5vh;
@@ -145,7 +238,7 @@ main {
   color: #495E57;
 }
 
-#home-section > h2 {
+#landing-section > h2 {
   grid-column: 1/ span 4;
   margin-top: 0;
 
@@ -153,25 +246,22 @@ main {
   color: #EE9972;
 }
 
-#home-section > p {
+#landing-section > p {
   grid-column: 1/ span 4;
 
   font-size: 20pt;
-  width: 40ch;
+  width: 100%;
+  max-width: 40ch;
+  word-wrap: normal;
 }
 
-#home-section > button {
+#landing-section > button {
   grid-column: 1/ span 2;
   justify-self: stretch;
   align-self: center;
-
-  padding: 15px;
-
-  font-weight: 500;
-  font-size: 18pt;
 }
 
-#home-section > img {
+#landing-section > img {
   grid-column: 5/ span 4;
   grid-row: 1/ span 4;
   justify-self: end;
@@ -441,6 +531,58 @@ main {
 }
 
 /*****************************************************************************/
+
+.myConfirmModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #495E57;
+  background: #EDEFEE;
+  color: #333333;
+  overflow: auto;
+  border-radius: 16pt;
+  outline: none;
+  padding: 20px;
+}
+
+.myConfirmOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(237, 239, 238, 0.75);
+}
+
+.myWarningModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 1px solid #495E57;
+  background: #EDEFEE;
+  color: #333333;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.myWarningOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(238, 153, 114, 0.75);
+}
+
+
+
+/*****************************************************************************/
 /* FOOTER                                                                    */
 /*****************************************************************************/
 
@@ -454,7 +596,7 @@ footer {
   color: #EDEFEE;
 }
 
-footer > h3 {
+footer h3 {
   color: #F4CE14;
 }
 
@@ -564,9 +706,14 @@ footer > img {
     row-gap: inherit;
   }
 
+  form {
+    grid-column: 1/ span 4;
+    grid-row: 2;
+  }
+
 /*****************************************************************************/
 
-  #home-section {
+  #landing-section {
     grid-column: 1/ span 4;
     grid-row: 1;
 
@@ -574,12 +721,12 @@ footer > img {
     flex-flow: column;
   }
 
-  #home-section > img {
+  #landing-section > img {
     order: 1;
     margin: 0;
   }
 
-  #home-section > h1 {
+  #landing-section > h1 {
     order: 2;
 
     /*margin-top: 5vh;
@@ -590,7 +737,7 @@ footer > img {
     color: #495E57;
   }
 
-  #home-section > h2 {
+  #landing-section > h2 {
     order: 3;
     margin-top: 0;
 
@@ -598,14 +745,14 @@ footer > img {
     color: #EE9972;
   }
 
-  #home-section > p {
+  #landing-section > p {
     order: 4;
 
     font-size: 20pt;
     width: 95%;
   }
 
-  #home-section > button {
+  #landing-section > button {
     order: 5;
     justify-self: stretch;
     align-self: flex-start;
