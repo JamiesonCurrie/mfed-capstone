@@ -1,14 +1,33 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import About    from "./About";
+import Landing  from "./Landing";
+import Reviews  from "./Reviews";
+import Specials from "./Specials";
+
 const Home = () => {
+  const { slug } = useParams();
+
+  useEffect(() => {
+    const id = `${slug}-section`;
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [slug]);
+
   return (
-    <article id='home-section'>
-      <h1>Little Lemon</h1>
-      <h2>Chicago</h2>
-      <p>
-        Reserve a table with our new reservation system!  We'll have your table ready for you when you arrive!
-      </p>
-      <button>Reserve a Table</button>
-      <img src='/images/restaurant.jpg' alt='Little Lemon Restaurant' />
-    </article>
+    <>
+      <Landing />
+      <Specials />
+      <Reviews />
+      <About />
+    </>
   );
 };
 
