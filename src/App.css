@@ -544,7 +544,7 @@ form input[type=submit] {
   overflow: auto;
   border-radius: 16pt;
   outline: none;
-  padding: 20px;
+  padding: 12px;
 }
 
 .myConfirmOverlay {

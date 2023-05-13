@@ -1,6 +1,8 @@
 import { useReducer, useState } from "react";
+
 import BookingConfirmation from './BookingConfirmation';
 import BookingWarning from "./BookingWarning";
+import BookingSuccess from "./BookingSuccess";
 
 const warningReducer = (state, action) => {
   if (action.type === 'push') {
@@ -20,6 +22,7 @@ const BookingForm = (props) => {
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openWarning, setOpenWarning] = useState(false);
+
   const [warnings,    reduceWarnings] = useReducer(warningReducer, []);
 
   const checkFormFields = (e) => {
@@ -52,9 +55,11 @@ const BookingForm = (props) => {
   };
 
   const confirmBooking = () => {
-    props.onSubmit();
-    props.updateBooking({type: 'all'});
     setOpenConfirm(false);
+    if (props.onSubmit()) {
+      props.updateBooking({type: 'all', default:props.defaultBooking});
+      props.setOpenSuccess(true);
+    }
   };
 
   return (
@@ -64,11 +69,19 @@ const BookingForm = (props) => {
         cancel={() => setOpenConfirm(false)}
         confirm={confirmBooking}
         currentBooking={props.currentBooking}
+        appElement={document.getElementById('root')}
       />
       <BookingWarning
         openState={openWarning}
         cancel={() => setOpenWarning(false)}
         warnings={warnings}
+        appElement={document.getElementById('root')}
+      />
+      <BookingSuccess
+        openState={props.openSuccess}
+        message={props.message}
+        confirm={() => props.setOpenSuccess(false)}
+        appElement={document.getElementById('root')}
       />
       <fieldset>
         <legend><h2>Reserve a Table</h2></legend>
