@@ -1,50 +1,26 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { Outlet, Route, Routes } from "react-router-dom";
+
+import {fetchAPI, submitAPI} from "../api.js";
 
 import Home from './Home';
 import BookingForm from './BookingForm';
 
 
-const twoDigits = (value) => ((value < 10) ? '0' + value : value);
-const seatingTimes = [
-  '17:00'
-, '18:00'
-, '19:00'
-, '20:00'
-, '21:00'
-, '22:00'
-];
-const today    = new Date();
-const todayStr = today.getFullYear() + '-' + twoDigits(today.getMonth() + 1) + '-' + twoDigits(today.getDate());
-let   maxDateStr;
+
+const twoDigits  = (value) => ((value < 10) ? '0' + value : value);
+const dateStr    = (date)  => (
+    date.getFullYear()
+  + '-' + twoDigits(date.getMonth() + 1)
+  + '-' + twoDigits(date.getDate())
+);
+const today      = new Date();
+const todayStr   = dateStr(today);
+let   maxDateStr = '';
+
 /*****************************************************************************/
 /* Build 7 days worth of booking times                                       */
 /*****************************************************************************/
-const intializeAvailableTimes = () => {
-  const initAvailableTimes = {};
-  initAvailableTimes[todayStr] = [].concat(seatingTimes);
-
-  const newDate = new Date();
-  for (let i = 1; i < 8; i++) {
-    newDate.setDate(today.getDate() + i);
-    const newDateStr = '' + newDate.getFullYear()
-    + '-' + twoDigits(newDate.getMonth() + 1)
-    + '-' + twoDigits(newDate.getDate())
-    ;
-    if (i === 7) {  maxDateStr = newDateStr; }
-
-    initAvailableTimes[newDateStr] = [].concat(seatingTimes);
-  }
-
-  return initAvailableTimes;
-};
-
-const initialBooking = {
-  date:        todayStr
-, time:        seatingTimes[0]
-, numOfGuests: 0
-, occasion:    ''
-};
 
 /*****************************************************************************/
 
@@ -74,30 +50,59 @@ const bookingReducer = (state, action) => {
     }
     case 'all':
     default: {
-      return {
-        date:        todayStr
-      , time:        seatingTimes[0]
-      , numOfGuests: 0
-      , occasion:    ''
-      };
+      return action.default;
     }
   };
+};
+
+const intializeAvailableTimes = () => {
+  const initAvailableTimes = {};
+  initAvailableTimes[todayStr] = [].concat(fetchAPI(today));
+  const newDate = new Date();
+  for (let i = 1; i < 8; i++) {
+    newDate.setDate(today.getDate() + i);
+    const newDateStr = dateStr(newDate);
+
+    if (i === 7) {  maxDateStr = newDateStr; }
+
+    initAvailableTimes[newDateStr] = [].concat(fetchAPI(newDate));
+  }
+
+  return initAvailableTimes;
 };
 
 /*****************************************************************************/
 
 const Main = () => {
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [successMsg,  setSuccessMsg]  = useState('There was an issue reverving your table. Please try again.');
+
   const [availableTimes, reduceAvailableTimes] = useReducer(
     timeReducer
   , null
   , intializeAvailableTimes
   );
+
+  const initialBooking = {
+    date:        todayStr
+  , time:        availableTimes[todayStr][0]
+  , numOfGuests: 0
+  , occasion:    ''
+  };
+
   const [currentBooking, updateCurrentBooking] = useReducer(
     bookingReducer
   , initialBooking
   );
 
-  const onBookingSubmit = () => reduceAvailableTimes(currentBooking);
+  const onBookingSubmit = () => {
+    if (submitAPI()) {
+      setSuccessMsg('Booking successfull');
+      reduceAvailableTimes(currentBooking);
+    }
+    setOpenSuccess(true);
+  };
 
   return (
     <main>
@@ -114,6 +119,10 @@ const Main = () => {
               onSubmit={onBookingSubmit}
               currentBooking={currentBooking}
               updateBooking={updateCurrentBooking}
+              message={successMsg}
+              setOpenSuccess={setOpenSuccess}
+              openSuccess={openSuccess}
+              defaultBooking={initialBooking}
             />
           }
         />
