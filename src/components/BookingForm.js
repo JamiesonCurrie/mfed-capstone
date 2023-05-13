@@ -112,7 +112,7 @@ const BookingForm = (props) => {
           })}
         />
         <label htmlFor='res-guests'>Number of Guests:</label>
-        <label htmlFor='res-guests'>{props.currentBooking.numOfGuests}</label>
+        <label htmlFor='res-guests' id='guests-state'>{props.currentBooking.numOfGuests}</label>
         <input
           id='res-guests'
           value={props.currentBooking.numOfGuests}
