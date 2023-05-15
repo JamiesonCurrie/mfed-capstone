@@ -68,7 +68,7 @@ const BookingForm = (props) => {
   };
 
   return (
-    <form onSubmit={checkFormFields}>
+    <form id='booking-form' onSubmit={checkFormFields}>
       <BookingConfirmation
         openState={openConfirm}
         cancel={() => setOpenConfirm(false)}
