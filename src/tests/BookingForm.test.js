@@ -59,3 +59,43 @@ test('check update Booking', async () => {
     valCheck
   );
 });
+
+test('Form Validation function checkFormFields bad', async () => {
+  const availableTimes = {'YYYY-MM-DD': ['17:00']}
+  const currentBookingBad = {
+    date:        'YYYY-MM-DD'
+  , time:        ''
+  , numOfGuests: 0
+  , occasion:    ''
+  };
+
+  const bf = render(<BookingForm availableTimes={availableTimes} currentBooking={currentBookingBad} />);
+
+  act(() => {
+    fireEvent.submit(
+      bf.container.querySelector('#booking-form')
+    );
+  });
+
+  expect(screen.getByText('Warnings')).toBeInTheDocument();
+});
+
+test('Form Validation function checkFormFields good', async () => {
+  const availableTimes = {'YYYY-MM-DD': ['17:00']}
+  const currentBookingGood = {
+    date:        'YYYY-MM-DD'
+  , time:        '17:00'
+  , numOfGuests: 2
+  , occasion:    'birthday'
+  };
+
+  const bf = render(<BookingForm availableTimes={availableTimes} currentBooking={currentBookingGood} />);
+
+  act(() => {
+    fireEvent.submit(
+      bf.container.querySelector('#booking-form')
+    );
+  });
+
+  expect(screen.getByText('Confirm Booking')).toBeInTheDocument();
+});
