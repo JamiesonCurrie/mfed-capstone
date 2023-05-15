@@ -8,6 +8,7 @@ const BookingConfirmation = (props) => {
       contentLabel="Booking Confirmation"
       className='myConfirmModal'
       overlayClassName='myConfirmOverlay'
+      appElement={props.appElement}
     >
       <h2>Confirm Booking</h2>
       <h2>Details:</h2>

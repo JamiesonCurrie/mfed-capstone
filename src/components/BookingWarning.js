@@ -6,7 +6,7 @@ const BookingWarning = (props) => (
     contentLabel="Booking Form field warnings"
     className='myWarningModal'
     overlayClassName='myWarningOverlay'
-    appElement={el}
+    appElement={props.appElement}
   >
     <h2>Warnings</h2>
     <ul>
