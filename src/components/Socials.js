@@ -33,7 +33,7 @@ const socials = [
 const Socials = () => {
   return (
     <nav id='socials'>
-      <h3>Social Media</h3>
+      <h3>Social Media Links</h3>
       <ul>
         {socials.map((social) => {
           return (
