@@ -60,7 +60,21 @@ test('check update Booking', async () => {
   );
 });
 
-test('Form Validation function checkFormFields bad', async () => {
+test('Form Validation UI - time', async () => {
+  const availableTimes = {'YYYY-MM-DD': []}
+  const currentBooking = {
+    date:        'YYYY-MM-DD'
+  , time:        ''
+  , numOfGuests: 0
+  , occasion:    ''
+  };
+
+  const bf = render(<BookingForm availableTimes={availableTimes} currentBooking={currentBooking} />);
+
+  expect(screen.getByText('No Times Available')).toBeInTheDocument();
+});
+
+test('Form Validation function checkFormFields - bad', async () => {
   const availableTimes = {'YYYY-MM-DD': ['17:00']}
   const currentBookingBad = {
     date:        'YYYY-MM-DD'
@@ -80,7 +94,7 @@ test('Form Validation function checkFormFields bad', async () => {
   expect(screen.getByText('Warnings')).toBeInTheDocument();
 });
 
-test('Form Validation function checkFormFields good', async () => {
+test('Form Validation function checkFormFields - good', async () => {
   const availableTimes = {'YYYY-MM-DD': ['17:00']}
   const currentBookingGood = {
     date:        'YYYY-MM-DD'
