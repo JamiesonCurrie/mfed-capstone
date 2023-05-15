@@ -47,6 +47,14 @@ const BookingForm = (props) => {
       });
       warningCheck = true;
     }
+    if (props.currentBooking.time === '') {
+      reduceWarnings({
+        type: 'push'
+      , key:  'time'
+      , text: 'There are no times available on the date selected.'
+      });
+      warningCheck = true;
+    }
 
     (warningCheck)
     ? setOpenWarning(true)
@@ -56,10 +64,7 @@ const BookingForm = (props) => {
 
   const confirmBooking = () => {
     setOpenConfirm(false);
-    if (props.onSubmit()) {
-      props.updateBooking({type: 'all', default:props.defaultBooking});
-      props.setOpenSuccess(true);
-    }
+    props.onSubmit()
   };
 
   return (
@@ -107,11 +112,15 @@ const BookingForm = (props) => {
           , value: e.target.value
           })}
         >
-          {props.availableTimes[props.currentBooking.date].map(
-            (time) => (
-              <option key={time} value={time}>{time}</option>
-            )
-          )}
+          {
+            (props.availableTimes[props.currentBooking.date].length > 0)
+            ? props.availableTimes[props.currentBooking.date].map(
+                (time) => (
+                  <option key={time} value={time}>{time}</option>
+                )
+              )
+            : <option key='blank' value=''>No Times Available</option>
+          }
         </select>
         <label htmlFor='res-occasion'>Occasion:</label>
         <input
