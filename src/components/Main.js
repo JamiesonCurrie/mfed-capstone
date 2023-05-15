@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Outlet, Route, Routes } from "react-router-dom";
 
 import {fetchAPI, submitAPI} from "../api.js";
@@ -14,13 +14,9 @@ const dateStr    = (date)  => (
   + '-' + twoDigits(date.getMonth() + 1)
   + '-' + twoDigits(date.getDate())
 );
-const today      = new Date();
-const todayStr   = dateStr(today);
-let   maxDateStr = '';
-
-/*****************************************************************************/
-/* Build 7 days worth of booking times                                       */
-/*****************************************************************************/
+let today;
+let todayStr;
+let maxDateStr;
 
 /*****************************************************************************/
 
@@ -30,7 +26,7 @@ const timeReducer = (state, action) => {
   );
   return {
     ...state
-  , [action.date]: (newTimes.length > 0) ? [].concat(newTimes) : null
+  , [action.date]: (newTimes.length > 0) ? [].concat(newTimes) : []
   };
 };
 
@@ -50,22 +46,31 @@ const bookingReducer = (state, action) => {
     }
     case 'all':
     default: {
-      return action.default;
+      return {
+        date:        action.default.date
+      , time:        action.default.time || ''
+      , numOfGuests: action.default.numOfGuests
+      , occasion:    action.default.occasion
+      };
     }
   };
 };
 
+/*****************************************************************************/
+/* Build 7 days worth of booking times                                       */
+/*****************************************************************************/
 const intializeAvailableTimes = () => {
+  today    = new Date();
+  todayStr = dateStr(today);
+
   const initAvailableTimes = {};
-  initAvailableTimes[todayStr] = [].concat(fetchAPI(today));
+  initAvailableTimes[todayStr] = [].concat([].concat(fetchAPI(today)));
   const newDate = new Date();
   for (let i = 1; i < 8; i++) {
     newDate.setDate(today.getDate() + i);
-    const newDateStr = dateStr(newDate);
+    initAvailableTimes[dateStr(newDate)] = [].concat(fetchAPI(newDate));
 
-    if (i === 7) {  maxDateStr = newDateStr; }
-
-    initAvailableTimes[newDateStr] = [].concat(fetchAPI(newDate));
+    if (i === 7) { maxDateStr = dateStr(newDate); }
   }
 
   return initAvailableTimes;
@@ -84,16 +89,14 @@ const Main = () => {
   , intializeAvailableTimes
   );
 
-  const initialBooking = {
-    date:        todayStr
-  , time:        availableTimes[todayStr][0]
-  , numOfGuests: 0
-  , occasion:    ''
-  };
-
   const [currentBooking, updateCurrentBooking] = useReducer(
     bookingReducer
-  , initialBooking
+  , {
+      date:        todayStr
+    , time:        availableTimes[todayStr][0]
+    , numOfGuests: 0
+    , occasion:    ''
+    }
   );
 
   const onBookingSubmit = () => {
@@ -103,6 +106,15 @@ const Main = () => {
     }
     setOpenSuccess(true);
   };
+
+  useEffect(() => {
+    updateCurrentBooking({default: {
+      date:        todayStr
+    , time:        availableTimes[todayStr][0]
+    , numOfGuests: 0
+    , occasion:    ''
+    }});
+  }, [availableTimes]);
 
   return (
     <main>
@@ -122,7 +134,6 @@ const Main = () => {
               message={successMsg}
               setOpenSuccess={setOpenSuccess}
               openSuccess={openSuccess}
-              defaultBooking={initialBooking}
             />
           }
         />
